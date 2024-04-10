@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
   };
 
   preBuild = ''
-    cargo update
+    ls
     sed -i "s/PLUGINS = */PLUGINS = calc/g" config.mk
   '';
 
