@@ -54,8 +54,8 @@ stdenv.mkDerivation rec {
   };
 
   preBuild = ''
-    ls
     sed -i "s/PLUGINS = */PLUGINS = calc/g" config.mk
+    make plugins
   '';
 
   # Copy the Cargo.lock stored here in nixpkgs into the build directory.
