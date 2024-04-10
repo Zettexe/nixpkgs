@@ -7,6 +7,7 @@
 , fontconfig
 , libXft
 , libXinerama
+, xclip
 , m4
 , pkg-config
 , python3
@@ -41,6 +42,7 @@ stdenv.mkDerivation rec {
     fontconfig
     libXft
     libXinerama
+    xclip
   ];
 
   # The dmenu-rs repository does not include a Cargo.lock because of its
@@ -50,6 +52,10 @@ stdenv.mkDerivation rec {
   cargoDeps = rustPlatform.importCargoLock {
     lockFile = ./Cargo.lock;
   };
+
+  preBuild = ''
+    sed -i "s/PLUGINS = */PLUGINS = calc fuzzy/g" config.mk
+  '';
 
   # Copy the Cargo.lock stored here in nixpkgs into the build directory.
   postPatch = ''
