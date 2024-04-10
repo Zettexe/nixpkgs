@@ -55,6 +55,9 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     sed -i "s/PLUGINS = */PLUGINS = calc/g" config.mk
+  '';
+
+  postBuild = ''
     make plugins
   '';
 
