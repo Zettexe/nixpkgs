@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
   };
 
   preBuild = ''
-    sed -i "s/PLUGINS = */PLUGINS = calc fuzzy/g" config.mk
+    sed -i "s/PLUGINS = */PLUGINS = calc/g" config.mk
   '';
 
   # Copy the Cargo.lock stored here in nixpkgs into the build directory.
