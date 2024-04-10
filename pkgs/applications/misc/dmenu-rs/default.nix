@@ -54,6 +54,7 @@ stdenv.mkDerivation rec {
   };
 
   preBuild = ''
+    sed -i "s/1.7.0/1.12.0/g" src/plugins/calc/deps.toml
     sed -i "s/PLUGINS = */PLUGINS = calc/g" config.mk
   '';
 
