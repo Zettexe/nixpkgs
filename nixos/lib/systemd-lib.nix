@@ -14,10 +14,12 @@ let
     elem
     filter
     filterAttrs
+    flatten
     flip
     head
     isInt
     isList
+    isPath
     length
     makeBinPath
     makeSearchPathOutput
@@ -28,6 +30,7 @@ let
     optional
     optionalAttrs
     optionalString
+    pipe
     range
     replaceStrings
     reverseList
@@ -147,6 +150,10 @@ in rec {
   assertRange = name: min: max: group: attr:
     optional (attr ? ${name} && !(min <= attr.${name} && max >= attr.${name}))
       "Systemd ${group} field `${name}' is outside the range [${toString min},${toString max}]";
+
+  assertRangeOrOneOf = name: min: max: values: group: attr:
+    optional (attr ? ${name} && !((min <= attr.${name} && max >= attr.${name}) || elem attr.${name} values))
+      "Systemd ${group} field `${name}' is not a value in range [${toString min},${toString max}], or one of ${toString values}";
 
   assertMinimum = name: min: group: attr:
     optional (attr ? ${name} && attr.${name} < min)
@@ -362,9 +369,17 @@ in rec {
         // optionalAttrs (config.requisite != [])
           { Requisite = toString config.requisite; }
         // optionalAttrs (config ? restartTriggers && config.restartTriggers != [])
-          { X-Restart-Triggers = "${pkgs.writeText "X-Restart-Triggers-${name}" (toString config.restartTriggers)}"; }
+          { X-Restart-Triggers = "${pkgs.writeText "X-Restart-Triggers-${name}" (pipe config.restartTriggers [
+              flatten
+              (map (x: if isPath x then "${x}" else x))
+              toString
+            ])}"; }
         // optionalAttrs (config ? reloadTriggers && config.reloadTriggers != [])
-          { X-Reload-Triggers = "${pkgs.writeText "X-Reload-Triggers-${name}" (toString config.reloadTriggers)}"; }
+          { X-Reload-Triggers = "${pkgs.writeText "X-Reload-Triggers-${name}" (pipe config.reloadTriggers [
+              flatten
+              (map (x: if isPath x then "${x}" else x))
+              toString
+            ])}"; }
         // optionalAttrs (config.description != "") {
           Description = config.description; }
         // optionalAttrs (config.documentation != []) {

@@ -2,7 +2,7 @@
 # Do not edit!
 
 {
-  version = "2024.4.1";
+  version = "2024.4.3";
   components = {
     "3_day_blinds" = ps: with ps; [
     ];
@@ -97,7 +97,8 @@
       airtouch4pyapi
     ];
     "airtouch5" = ps: with ps; [
-    ]; # missing inputs: airtouch5py
+      airtouch5py
+    ];
     "airvisual" = ps: with ps; [
       pyairvisual
     ];
@@ -162,7 +163,8 @@
       sqlalchemy
     ];
     "analytics_insights" = ps: with ps; [
-    ]; # missing inputs: python-homeassistant-analytics
+      python-homeassistant-analytics
+    ];
     "android_ip_webcam" = ps: with ps; [
       pydroid-ipcam
     ];
@@ -570,7 +572,8 @@
     "brel_home" = ps: with ps; [
     ];
     "bring" = ps: with ps; [
-    ]; # missing inputs: bring-api
+      bring-api
+    ];
     "broadlink" = ps: with ps; [
       broadlink
     ];
@@ -948,7 +951,7 @@
     "digital_loggers" = ps: with ps; [
     ];
     "digital_ocean" = ps: with ps; [
-      digital-ocean
+      python-digitalocean
     ];
     "directv" = ps: with ps; [
       directv
@@ -5955,6 +5958,7 @@
     "ambiclimate"
     "ambient_station"
     "analytics"
+    "analytics_insights"
     "android_ip_webcam"
     "androidtv"
     "androidtv_remote"
@@ -6004,6 +6008,7 @@
     "bond"
     "bosch_shc"
     "braviatv"
+    "bring"
     "broadlink"
     "brother"
     "brottsplatskartan"
